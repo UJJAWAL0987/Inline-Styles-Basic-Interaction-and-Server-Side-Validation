@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Input Form</title>
+    <style>
+      
+       h1 {
+            text-align: center;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+     
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>User Information</h1>
+
+    <form id="userForm" action="/submit" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <span id="nameError" class="error"></span>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <span id="emailError" class="error"></span>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required><br>
+        <span id="phoneError" class="error"></span>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br>
+        <span id="genderError" class="error"></span>
+
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" required></textarea><br>
+        <span id="messageError" class="error"></span>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // Inline JavaScript for client-side validation
+        document.getElementById('userForm').addEventListener('submit', function (event) {
+            let valid = true;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const gender = document.getElementById('gender').value;
+            const message = document.getElementById('message').value;
+
+            if (name.length < 3) {
+                valid = false;
+                document.getElementById('nameError').innerText = 'Name must be at least 3 characters long.';
+            } else {
+                document.getElementById('nameError').innerText = '';
+            }
+
+            if (!email.includes('@')) {
+                valid = false;
+                document.getElementById('emailError').innerText = 'Please enter a valid email address.';
+            } else {
+                document.getElementById('emailError').innerText = '';
+            }
+
+            if (phone.length !== 10 || isNaN(phone)) {
+                valid = false;
+                document.getElementById('phoneError').innerText = 'Please enter a valid 10-digit phone number.';
+            } else {
+                document.getElementById('phoneError').innerText = '';
+            }
+
+            if (gender === "") {
+                valid = false;
+                document.getElementById('genderError').innerText = 'Please select your gender.';
+            } else {
+                document.getElementById('genderError').innerText = '';
+            }
+
+            if (message.length < 10) {
+                valid = false;
+                document.getElementById('messageError').innerText = 'Message must be at least 10 characters long.';
+            } else {
+                document.getElementById('messageError').innerText = '';
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+
+</html>
